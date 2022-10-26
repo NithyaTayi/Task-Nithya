@@ -1,0 +1,9 @@
+.toolbar{
+    position: absolute;
+    text-align: center;
+    border:1px solid black;
+    top:85%;
+    height: 8%;
+    width: 90%;
+    margin: 2%;
+}

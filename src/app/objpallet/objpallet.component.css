@@ -1,0 +1,10 @@
+.objpallet{
+    position: absolute;
+    text-align: center;
+    border: 1px solid black;
+    height: 89%;
+    width: 15%;
+    margin: 1%;
+    padding: auto;
+    top:8%;
+}
