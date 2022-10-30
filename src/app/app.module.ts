@@ -19,6 +19,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HeaderComponent } from './header/header.component';
 import { ObjpalletComponent } from './objpallet/objpallet.component';
 import {MatMenuModule} from '@angular/material/menu';
+// es6 imports
 
 @NgModule({
   declarations: [
