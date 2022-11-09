@@ -22,10 +22,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import { DrawshapeService } from './services/drawshape.service';
 import { EventsService } from './services/events.service';
 
-
-
-// es6 imports
-
 @NgModule({
   declarations: [
     AppComponent,
