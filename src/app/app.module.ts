@@ -21,6 +21,9 @@ import { ObjpalletComponent } from './objpallet/objpallet.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { DrawshapeService } from './services/drawshape.service';
 import { EventsService } from './services/events.service';
+import { counterReducer } from './store/our.reducer';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,11 @@ import { EventsService } from './services/events.service';
     MatIconModule,
     MatListModule,
     MatSliderModule,
-    MatMenuModule
+    MatMenuModule,
+    StoreModule.forRoot({ canvasstate: counterReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+    }),
   ],
   providers: [DrawshapeService,EventsService],
   bootstrap: [AppComponent]

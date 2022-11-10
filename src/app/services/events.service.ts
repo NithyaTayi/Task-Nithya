@@ -1,5 +1,7 @@
 import { Injectable} from '@angular/core';
+import { props, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { event_updated } from '../store/our.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class EventsService {
   canvas!: fabric.Canvas;
   public subject = new BehaviorSubject<string>('');
-  constructor() { }
+  constructor(private store:Store) { }
+
+  updatedcanvas(){
+    this.store.dispatch(event_updated({model:{eventstring:JSON.stringify(this.canvas)}})) 
+}
 
   eventHandler() {
         let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
@@ -15,6 +21,7 @@ export class EventsService {
         this.canvas.on('object:added', (options: any) => {
             if (options.target) {
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + 'is added');
+                this.updatedcanvas()
             }
         });
         //object translate
