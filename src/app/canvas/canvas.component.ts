@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./canvas.component.css']
 })
 export class CanvasComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit(): void {
+   
   }
-
 }
