@@ -43,8 +43,7 @@ export class EventsService {
         this.canvas.on('object:moving', (options: any) => {
             if (options.target) {
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is translated');
-            } 
-            //this.store.dispatch(event_updateTranslate({model:{eventstring:JSON.stringify(this.canvas)}}))
+            }
         });
         //object scale
         this.canvas.on('object:scaling', (options: any) => {
@@ -63,7 +62,3 @@ export class EventsService {
       return this.subject.asObservable();
   }
 }
-// function newprops(Properties: any, properties: any) {
-//     throw new Error('Function not implemented.');
-// }
-
