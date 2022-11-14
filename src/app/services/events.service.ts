@@ -2,8 +2,8 @@ import { Injectable} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { event_updateRotate,event_updateScale,event_updateTranslate,event_updateAdd } from '../store/our.actions';
-import { PropserviceService } from './propservice.service';
-import { properties } from '../store/our.model';
+//import { PropserviceService } from './propservice.service';
+//import { properties } from '../store/our.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ import { properties } from '../store/our.model';
 export class EventsService {
   canvas!: fabric.Canvas;
   public subject = new BehaviorSubject<string>('');
-  constructor(private store:Store,private PropserviceService:PropserviceService) { }
+  constructor(private store:Store) { }
+  //,private PropserviceService:PropserviceService
 
   eventHandler() {
         let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
@@ -57,26 +58,12 @@ export class EventsService {
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is rotated');
             }
         });
-
-
-        
-      
-
     }
-
-   
-      
-      
-
-      
-
-
-
     eventMessage(): Observable<string> {
       return this.subject.asObservable();
   }
 }
-function newprops(Properties: any, properties: any) {
-    throw new Error('Function not implemented.');
-}
+// function newprops(Properties: any, properties: any) {
+//     throw new Error('Function not implemented.');
+// }
 
