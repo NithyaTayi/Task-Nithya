@@ -19,7 +19,7 @@ export class ObjpalletComponent implements OnInit {
     this.canvas = new fabric.Canvas('Rcanvas');
     this.drawshapeService.canvas=this.canvas;
     this.eventservice.canvas = this.canvas;
-    this.propservice.canvas=this.canvas;
+    //this.propservice.canvas=this.canvas;
     this.eventservice.eventHandler();
   }
   drawRectangle() {
