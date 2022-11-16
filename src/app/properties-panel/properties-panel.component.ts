@@ -9,7 +9,7 @@ import { EventsService } from '../services/events.service';
   styleUrls: ['./properties-panel.component.css']
 })
 export class PropertiesPanelComponent implements OnInit {
-  isdisabled: boolean = this.PropserviceService.isdisabled;
+  isdisabled:boolean = this.PropserviceService.isdisabled; 
 
   constructor(private PropserviceService:PropserviceService,private eventservice:EventsService) {
      this.PropserviceService.subjectforProp$.subscribe(
@@ -26,7 +26,8 @@ export class PropertiesPanelComponent implements OnInit {
     strokewidth: 1,
     strokecolor: '#999999',
     fillcolor: '#145697',
-    objangle: 0
+    objangle: 0,
+    isdisabled:false
   };
 
   thumbLabel = true;

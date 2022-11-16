@@ -9,9 +9,10 @@ export class PropserviceService {
   isdisabled: boolean=false;
   constructor() { }
   subjectforProp$: Subject<properties> = new Subject();
-  DisablePropertyPanel() {
-    this.subjectforProp$.next();
+  DisablePropertyPanel(Properties: properties) {
+    this.subjectforProp$.next(Properties);
     this.isdisabled=true
+    console.log('hello')
   }
   OnObjectSelected(Properties: properties) {
     console.log(Properties,'onobj')

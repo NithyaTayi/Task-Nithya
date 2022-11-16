@@ -10,4 +10,5 @@ export interface properties {
     strokecolor: string;
     fillcolor: string;
     objangle: number;
+    isdisabled:boolean;
   }

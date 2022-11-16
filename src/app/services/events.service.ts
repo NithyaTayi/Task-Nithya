@@ -25,6 +25,7 @@ export class EventsService {
         this.canvas.on('object:modified',(options:any)=>{
          if(options["action"]=='rotate'){
                 this.store.dispatch(event_updateRotate({model:{eventstring:JSON.stringify(this.canvas)}}))
+                this.getSelectedObjectsProperties();
              }
              if(options["action"]=='scale'){
                  this.store.dispatch(event_updateScale({model:{eventstring:JSON.stringify(this.canvas)}})) 
@@ -53,8 +54,9 @@ export class EventsService {
 
         this.canvas.on('selection:created', (options: any) => {
             if (options.target) {
+              if(options.target.type!= 'activeSelection')
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is selected');
-                console.log(options.target)
+                
             }
             this.getSelectedObjectsProperties();
           });
@@ -66,10 +68,11 @@ export class EventsService {
 
             this.getSelectedObjectsProperties();
           });
+
+
           
           this.canvas.on('selection:cleared', (options: any) => {
             this.subject.next('No Object Is Selected');
-            this.PropserviceService.DisablePropertyPanel()
           });
       
     }
@@ -78,21 +81,35 @@ export class EventsService {
   }
 
   getSelectedObjectsProperties() {
-    let objecttype = this.canvas.getActiveObject().type;
-
+    let objecttype = this.canvas.getActiveObject().get('type');
      if (objecttype == 'activeSelection') {
-      this.PropserviceService.DisablePropertyPanel();
+      let disableprops:properties = {
+        strokewidth:0,
+        strokecolor:'#000000',
+        fillcolor:'#000000',
+        objangle:0,
+        isdisabled:true
+        // strokewidth:this.canvas.getActiveObject().set('strokeWidth', 0) ,
+        // strokecolor:this.canvas.getActiveObject().set('fill','#000000'),
+        // fillcolor:this.canvas.getActiveObject().set('stroke', '#000000'),
+        // objangle:this.canvas.getActiveObject().set('angle', 0),
+      };
+
+      this.PropserviceService.DisablePropertyPanel(disableprops);
     } else {
       let currentprop: properties = {
         strokewidth: this.canvas.getActiveObject().get('strokeWidth') as number,
         strokecolor: this.canvas.getActiveObject().get('stroke') as string,
         fillcolor: this.canvas.getActiveObject().get('fill') as string,
         objangle: this.canvas.getActiveObject().get('angle') as number,
+        isdisabled:false
       };
-
+      console.log(currentprop.objangle)
       this.PropserviceService.OnObjectSelected(currentprop);
      }
   }
+
+  
 
   newprops(Properties:properties) {
     console.log(this.canvas.getActiveObject());
@@ -100,6 +117,7 @@ export class EventsService {
     this.canvas.getActiveObject().set('fill', Properties.fillcolor);
     this.canvas.getActiveObject().set('stroke', Properties.strokecolor);
     this.canvas.getActiveObject().set('angle', Properties.objangle);
+    console.log(Properties.objangle)
     this.canvas.renderAll();
     this.store.dispatch(event_updatepropchange({model:{eventstring:JSON.stringify(this.canvas)}}))
   }
