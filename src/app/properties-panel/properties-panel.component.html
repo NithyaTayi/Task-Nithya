@@ -3,23 +3,23 @@
     <div class="object-properties">
         <div class="strokewidth">
             <label for="strokewidth"> Stroke Width</label>
-            <mat-slider min="0" max="10" step="0.5" name="strokewidth"  [thumbLabel]="thumbLabel" #strokewidth [value]="PropertyPanelValues.strokewidth" (change)="onSliderChange(strokewidth.value)" style="width:50%; "></mat-slider>
+            <mat-slider min="0" max="10" step="0.5" name="strokewidth"  [thumbLabel]="thumbLabel" #strokewidth [value]="PropertyPanelValues.strokewidth" (change)="onPropChange('strokewidth',strokewidth.value.toString())" style="width:50%; "></mat-slider>
             <br>
         </div>
         <div class="strokecolor">
             <label for="strokecolor"> Stroke Color</label>
             <br>
-            <input type="color" name="strokecolor" id="strokecolor" #strokecolor [value]="PropertyPanelValues.strokecolor" (change)="onStrokeColorChange(strokecolor.value)">
+            <input type="color" name="strokecolor" id="strokecolor" #strokecolor [value]="PropertyPanelValues.strokecolor" (change)="onPropChange('strokecolor',strokecolor.value)">
         </div>
         <div class="fillcolor">
             <label for="fillcolor" > Fill</label>
             <br>
-            <input type="color" name="fillcolor" #fillcolor [value]="PropertyPanelValues.fillcolor" (change)="onFillColorChange(fillcolor.value)" />
+            <input type="color" name="fillcolor" #fillcolor [value]="PropertyPanelValues.fillcolor" (change)="onPropChange('fillcolor',fillcolor.value)" />
         </div>
         <div class="Angle">
             <label for="Angle"> Angle</label>
             <br>
-            <input type="number" min="0" max="360" name="angle" #angleval  [value]="PropertyPanelValues.objangle" (change)="onAngleChange(angleval.value)" style="width:90%;">
+            <input type="number" min="0" max="360" name="angle" #angleval  [value]="PropertyPanelValues.objangle" (change)="onPropChange('angle',angleval.value)" style="width:90%;">
         </div>
     </div>
 </div>    
