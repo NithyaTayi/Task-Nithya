@@ -19,6 +19,7 @@ export class PropertiesPanelComponent implements OnInit {
       this.PropertyPanelValues.strokecolor=Properties.strokecolor
       this.PropertyPanelValues.objangle=Properties.objangle
       this.PropertyPanelValues.fillcolor=Properties.fillcolor
+      this.PropertyPanelValues.isdisabled=Properties.isdisabled
     });
   }
   ngOnInit(): void { }
