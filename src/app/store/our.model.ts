@@ -5,3 +5,10 @@ export interface model{
 export const initialState = {
     eventstring:' '
   };
+export interface properties {
+    strokewidth: number;
+    strokecolor: string;
+    fillcolor: string;
+    objangle: number;
+    isdisabled:boolean;
+  }

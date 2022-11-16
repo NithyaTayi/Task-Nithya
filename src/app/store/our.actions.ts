@@ -6,6 +6,9 @@ export const event_add = '[model] event_add';
 export const event_rotate='[model] event_rotate';
 export const event_scale='[model] event_scale';
 export const event_translate='[model] event_translate';
+export const event_propchange='[model] event_property changed';
+
+
 
 export const event_updateAdd =createAction(
     event_add,props< {model:model}>()
@@ -21,5 +24,9 @@ export const event_updateScale =createAction(
 
 export const event_updateTranslate =createAction(
     event_translate,props< {model:model}>()
+)
+
+export const event_updatepropchange =createAction(
+    event_propchange,props< {model:model}>()
 )
     
