@@ -1,9 +1,10 @@
-export interface model{
+export interface State{
     eventstring:string;
+    undotoggle:boolean
 }
-
-export const initialState = {
-    eventstring:' '
+export const initialState:State = {
+    eventstring:JSON.stringify(' '),
+    undotoggle:false
   };
 export interface properties {
     strokewidth: number;
