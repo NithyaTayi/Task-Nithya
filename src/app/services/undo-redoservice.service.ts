@@ -31,6 +31,7 @@ export class UndoRedoserviceService {
 
   toredo(){
   this.redopop=this.forredostack.pop()
+  this.undoEnable$.next(true);
   this.forundostack.push(this.redopop!)
   if (this.forredostack.length == 0) {
     this.redoEnable$.next(false);
