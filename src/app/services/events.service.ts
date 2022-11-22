@@ -63,7 +63,7 @@ export class EventsService {
 
         this.canvas.on('selection:updated', (options: any) => {
             if (options.target) {
-                this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is updated');
+                this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is selected');
             }
           });
           
@@ -103,7 +103,6 @@ export class EventsService {
     this.canvas.getActiveObject().set('stroke', Properties.strokecolor);
     this.canvas.getActiveObject().set('angle', Properties.objangle);
     this.canvas.renderAll();
-    //if(this.flag)
       this.updatecanvas()
     
   }
