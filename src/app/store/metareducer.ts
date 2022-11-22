@@ -1,9 +1,6 @@
-import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
-import { InjectionToken } from '@angular/core';
+import {  ActionReducer, MetaReducer } from '@ngrx/store';
 import { UndoRedoserviceService } from '../services/undo-redoservice.service';
-import { State } from './our.model';
-import { Action, props } from '@ngrx/store';
-import { ActionTypes, OurActions, event_UpdateUndotoggle,modifiedStateAction } from '../store/our.actions';
+import { ActionTypes, OurActions,modifiedStateAction } from '../store/our.actions';
 import { AppState} from './index'
 
 export function undoRedoMetaReducer(
@@ -18,10 +15,6 @@ export function undoRedoMetaReducer(
       switch (action.type) {
         case ActionTypes.UndoElement:
           modifiedstate = undoRedoService.toundo();
-          modifiedAction = new event_UpdateUndotoggle({
-            eventstring: modifiedstate,
-            undotoggle:true
-        });
           break;
 
         case ActionTypes.RedoElement:

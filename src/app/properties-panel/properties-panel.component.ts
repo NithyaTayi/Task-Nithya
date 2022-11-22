@@ -11,7 +11,7 @@ export class PropertiesPanelComponent implements OnInit {
   isdisabled:boolean = this.PropserviceService.isdisabled; 
   constructor(private PropserviceService:PropserviceService,private eventservice:EventsService) {
      this.PropserviceService.subjectforProp$.subscribe(
-    (Properties) => {//console.log(Properties+' properties')
+    (Properties) => {
       this.eventservice.newprops(Properties),
       this.PropertyPanelValues.strokewidth=Properties.strokewidth
       this.PropertyPanelValues.strokecolor=Properties.strokecolor

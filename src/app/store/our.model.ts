@@ -3,7 +3,7 @@ export interface State{
     undotoggle:boolean
 }
 export const initialState:State = {
-    eventstring:JSON.stringify(' '),
+    eventstring:' ',
     undotoggle:false
   };
 export interface properties {

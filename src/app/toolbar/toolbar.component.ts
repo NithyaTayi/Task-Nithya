@@ -10,7 +10,6 @@ import { UndoRedoserviceService } from '../services/undo-redoservice.service';
 export class ToolbarComponent implements OnInit {
 
   constructor(private eventservice:EventsService,private undoRedoservice:UndoRedoserviceService) { 
-    
     this.undoRedoservice.undoEnable().subscribe((data)=>{
     this.undoEnable = data;
   })
@@ -18,8 +17,7 @@ export class ToolbarComponent implements OnInit {
     this.redoEnable = data;
   })}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   UndoOperation(){
     this.eventservice.updateundo()
   }
