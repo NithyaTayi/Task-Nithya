@@ -19,7 +19,6 @@ export function undoRedoMetaReducer(
 
         case ActionTypes.RedoElement:
           modifiedstate =  undoRedoService.toredo();
-          console.log(modifiedstate,'modi')
           break;
 
         case ActionTypes.UpdateCanvas:

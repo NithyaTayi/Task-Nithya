@@ -8,7 +8,6 @@ import { getCanvasUndostate } from '../store/our.selectors';
 @Injectable({
   providedIn: 'root'
 })
-
 export class EventsService {
   canvas!: fabric.Canvas;
   public subject = new BehaviorSubject<string>('');
@@ -60,14 +59,12 @@ export class EventsService {
               if(options.target.type!= 'activeSelection')
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is selected');
             }
-            this.getSelectedObjectsProperties();
           });
 
         this.canvas.on('selection:updated', (options: any) => {
             if (options.target) {
-                this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is selected');
+                this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is updated');
             }
-            this.getSelectedObjectsProperties();
           });
           
           this.canvas.on('selection:cleared', (options: any) => {
@@ -106,6 +103,9 @@ export class EventsService {
     this.canvas.getActiveObject().set('stroke', Properties.strokecolor);
     this.canvas.getActiveObject().set('angle', Properties.objangle);
     this.canvas.renderAll();
+    //if(this.flag)
+      this.updatecanvas()
+    
   }
   updatecanvas(){
      this.store.dispatch(new event_UpdateCanvas({eventstring:JSON.stringify(this.canvas),undotoggle:false}) ) 

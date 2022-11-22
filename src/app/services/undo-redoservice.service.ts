@@ -4,8 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UndoRedoserviceService {
-  undopop:any
-  redopop:any
   constructor() { }
   undoEnable$ = new BehaviorSubject<boolean>(false);
   redoEnable$ = new BehaviorSubject<boolean>(false);
@@ -20,8 +18,9 @@ export class UndoRedoserviceService {
   }
 
   toundo(){
-    this.undopop=this.forundostack.pop()
-    this.forredostack.push(this.undopop);
+    let undopop:any;
+    undopop=this.forundostack.pop()
+    this.forredostack.push(undopop);
     if (this.forundostack.length == 1) {
       this.undoEnable$.next(false);
     }
@@ -30,13 +29,14 @@ export class UndoRedoserviceService {
   }
 
   toredo(){
-  this.redopop=this.forredostack.pop()
+  let redopop:any;
+  redopop=this.forredostack.pop()
   this.undoEnable$.next(true);
-  this.forundostack.push(this.redopop!)
+  this.forundostack.push(redopop!)
   if (this.forredostack.length == 0) {
     this.redoEnable$.next(false);
   }
-  return this.redopop
+  return redopop
   }
   undoEnable(): Observable<boolean> {
     return this.undoEnable$.asObservable();
