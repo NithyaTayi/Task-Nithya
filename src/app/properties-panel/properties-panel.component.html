@@ -1,4 +1,4 @@
-<div class="properties">
+<div *ngIf="PropertyPanelValues.isdisabled==false" class="properties">
     <h3>Properties Panel</h3>
     <div class="object-properties">
         <div class="strokewidth">
@@ -24,8 +24,5 @@
     </div>
 </div>    
 <div  *ngIf="PropertyPanelValues.isdisabled" style="color: red">
-   
       Property panel cannot be used as multiple objects are selected
-    
-   
   </div>

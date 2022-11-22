@@ -1,39 +1,43 @@
 import { Injectable} from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { event_updateRotate,event_updateScale,event_updateTranslate,event_updateAdd,event_updatepropchange } from '../store/our.actions';
+import { event_RedoElement, event_UndoElement, event_UpdateCanvas } from '../store/our.actions';
 import { PropserviceService } from './propservice.service';
 import { properties } from '../store/our.model';
-
+import { getCanvasUndostate } from '../store/our.selectors';
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
   canvas!: fabric.Canvas;
   public subject = new BehaviorSubject<string>('');
-  constructor(private store:Store,private PropserviceService:PropserviceService) { }
-  
-
+  undoselector$ = this.store.pipe(select(getCanvasUndostate));
+  constructor(private store:Store<{canvasStore:' '}>
+    ,private PropserviceService:PropserviceService) { 
+      this.undoselector$.subscribe((data) => {
+        if (data != null) {
+          this.canvas.loadFromJSON(data, () => {});
+        }
+      });
+    }
   eventHandler() {
         let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
         this.canvas.on('object:added', (options: any) => {
             if (options.target) {
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is added');
-                this.store.dispatch(event_updateAdd({model:{eventstring:JSON.stringify(this.canvas)}})) 
             }
         });
         this.canvas.on('object:modified',(options:any)=>{
          if(options["action"]=='rotate'){
-                this.store.dispatch(event_updateRotate({model:{eventstring:JSON.stringify(this.canvas)}}))
+                this.updatecanvas()
                 this.getSelectedObjectsProperties();
              }
              if(options["action"]=='scale'){
-                 this.store.dispatch(event_updateScale({model:{eventstring:JSON.stringify(this.canvas)}})) 
+                 this.updatecanvas()
              }
              if(options["action"]=='drag'){
-                 this.store.dispatch(event_updateTranslate({model:{eventstring:JSON.stringify(this.canvas)}}))
-             }
-        
+                this.updatecanvas()
+             }    
     })
         this.canvas.on('object:moving', (options: any) => {
             if (options.target) {
@@ -47,34 +51,25 @@ export class EventsService {
         });
         this.canvas.on('object:rotating', (options: any) => {
             if (options.target) {
-                
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is rotated');
             }
         });
-
         this.canvas.on('selection:created', (options: any) => {
             if (options.target) {
               if(options.target.type!= 'activeSelection')
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is selected');
-                
             }
-            this.getSelectedObjectsProperties();
           });
 
         this.canvas.on('selection:updated', (options: any) => {
             if (options.target) {
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is selected');
             }
-
-            this.getSelectedObjectsProperties();
           });
-
-
           
           this.canvas.on('selection:cleared', (options: any) => {
             this.subject.next('No Object Is Selected');
           });
-      
     }
     eventMessage(): Observable<string> {
       return this.subject.asObservable();
@@ -89,12 +84,7 @@ export class EventsService {
         fillcolor:'#000000',
         objangle:0,
         isdisabled:true
-        // strokewidth:this.canvas.getActiveObject().set('strokeWidth', 0) ,
-        // strokecolor:this.canvas.getActiveObject().set('fill','#000000'),
-        // fillcolor:this.canvas.getActiveObject().set('stroke', '#000000'),
-        // objangle:this.canvas.getActiveObject().set('angle', 0),
       };
-
       this.PropserviceService.DisablePropertyPanel(disableprops);
     } else {
       let currentprop: properties = {
@@ -104,21 +94,25 @@ export class EventsService {
         objangle: this.canvas.getActiveObject().get('angle') as number,
         isdisabled:false
       };
-      console.log(currentprop.objangle)
       this.PropserviceService.OnObjectSelected(currentprop);
      }
   }
-
-  
-
   newprops(Properties:properties) {
-    console.log(this.canvas.getActiveObject());
     this.canvas.getActiveObject().set('strokeWidth', Properties.strokewidth);
     this.canvas.getActiveObject().set('fill', Properties.fillcolor);
     this.canvas.getActiveObject().set('stroke', Properties.strokecolor);
     this.canvas.getActiveObject().set('angle', Properties.objangle);
-    console.log(Properties.objangle)
     this.canvas.renderAll();
-    this.store.dispatch(event_updatepropchange({model:{eventstring:JSON.stringify(this.canvas)}}))
+      this.updatecanvas()
+    
+  }
+  updatecanvas(){
+     this.store.dispatch(new event_UpdateCanvas({eventstring:JSON.stringify(this.canvas),undotoggle:false}) ) 
+  }
+  updateRedo(){
+    this.store.dispatch(new event_RedoElement({eventstring:JSON.stringify(this.canvas),undotoggle:true}) ) 
+  }
+  updateundo(){
+    this.store.dispatch(new event_UndoElement({eventstring:JSON.stringify(this.canvas),undotoggle:true}))  
   }
 }

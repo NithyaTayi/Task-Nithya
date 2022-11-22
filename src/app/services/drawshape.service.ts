@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {fabric} from 'fabric';
+import { EventsService } from './events.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DrawshapeService {
   public canvas:any;
-  constructor() { }
+  constructor(private eventservice:EventsService) { }
   drawRectangle() {
     let Rectangle = new fabric.Rect({
     left:Math.random() * this.canvas.width,
@@ -18,6 +19,7 @@ export class DrawshapeService {
     stroke:'#000000'
   });
     this.canvas.add(Rectangle)
+    this.eventservice.updatecanvas()
     }
     drawTriangle() {
       let Triangle = new fabric.Triangle({
@@ -30,6 +32,7 @@ export class DrawshapeService {
        stroke:'#000000'
       });
        this.canvas.add(Triangle)
+       this.eventservice.updatecanvas()
       }
       drawCircle() {
       let Circle = new fabric.Circle({
@@ -41,5 +44,6 @@ export class DrawshapeService {
       stroke:'#000000'
     });
      this.canvas.add(Circle)
+     this.eventservice.updatecanvas()
       }
 }

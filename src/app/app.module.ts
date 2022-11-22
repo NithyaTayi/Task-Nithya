@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatSliderChange, MatSliderModule} from '@angular/material/slider';
-
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -21,9 +20,14 @@ import { ObjpalletComponent } from './objpallet/objpallet.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { DrawshapeService } from './services/drawshape.service';
 import { EventsService } from './services/events.service';
-import { counterReducer } from './store/our.reducer';
-import { StoreModule } from '@ngrx/store';
+import { UndoRedoserviceService } from './services/undo-redoservice.service';
+import { reducers , } from './store/index';
+import { NewReducer } from './store/our.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
+
+import { META_REDUCERS} from '@ngrx/store'
+import { undoRedoMetaReducer } from './store/metareducer';
 
 @NgModule({
   declarations: [
@@ -46,12 +50,19 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MatListModule,
     MatSliderModule,
     MatMenuModule,
-    StoreModule.forRoot({ canvasstate: counterReducer }),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     }),
   ],
-  providers: [DrawshapeService,EventsService],
+  providers: [
+    {
+        provide: META_REDUCERS,
+        deps: [ UndoRedoserviceService],
+        useFactory: undoRedoMetaReducer,
+        multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
