@@ -1,4 +1,4 @@
 <div class="toolbar">
-    <button color="primary" mat-button (click)="RedoOperation()" [disabled]= "!this.redoEnable">Redo</button>
-    <button color="primary" mat-button (click)="UndoOperation()" [disabled]= "!this.undoEnable">Undo</button>
+    <button color="primary" mat-button (click)="RedoOperation()" [disabled]= "!this.redoEnable" id="undoOp">Redo</button>
+    <button color="primary" mat-button (click)="UndoOperation()" [disabled]= "!this.undoEnable" id="redoOp">Undo</button>
 </div>

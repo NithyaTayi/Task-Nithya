@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {fabric} from 'fabric';
 import { DrawshapeService } from '../services/drawshape.service';
 import { EventsService } from '../services/events.service';
-import { PropserviceService } from '../services/propservice.service';
 
 
 @Component({
@@ -13,7 +12,7 @@ import { PropserviceService } from '../services/propservice.service';
 export class ObjpalletComponent implements OnInit {
   canvas:any
 
-  constructor(private drawshapeService:DrawshapeService,private eventservice:EventsService,private propservice:PropserviceService) { }
+  constructor(private drawshapeService:DrawshapeService,private eventservice:EventsService) { }
 
   ngOnInit(): void {
     this.canvas = new fabric.Canvas('Rcanvas');
@@ -21,6 +20,7 @@ export class ObjpalletComponent implements OnInit {
     this.eventservice.canvas = this.canvas;
     this.eventservice.eventHandler();
   }
+  
   drawRectangle() {
     this.drawshapeService.drawRectangle()
   }
