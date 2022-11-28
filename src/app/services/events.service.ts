@@ -24,10 +24,13 @@ export class EventsService {
         let shapes = { rect: 'Rectangle', triangle: 'Triangle', circle: 'Circle' };
         this.canvas.on('object:added', (options: any) => {
             if (options.target) {
+              //console.log(options.target,'added')
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is added');
+                console.log(this.subject.next)
             }
         });
         this.canvas.on('object:modified',(options:any)=>{
+          console.log(options)
          if(options["action"]=='rotate'){
                 this.updatecanvas()
                 this.getSelectedObjectsProperties();
@@ -45,6 +48,7 @@ export class EventsService {
             }
         });
         this.canvas.on('object:scaling', (options: any) => {
+          //console.log(options,'sale')
             if (options.target) {
                 this.subject.next(shapes[options.target.type as keyof typeof shapes] + ' is scaled');
             }
@@ -69,7 +73,7 @@ export class EventsService {
           
           this.canvas.on('selection:cleared', (options: any) => {
             this.subject.next('No Object Is Selected');
-          });
+          });  
     }
     eventMessage(): Observable<string> {
       return this.subject.asObservable();
@@ -103,8 +107,7 @@ export class EventsService {
     this.canvas.getActiveObject().set('stroke', Properties.strokecolor);
     this.canvas.getActiveObject().set('angle', Properties.objangle);
     this.canvas.renderAll();
-      this.updatecanvas()
-    
+    this.updatecanvas()
   }
   updatecanvas(){
      this.store.dispatch(new event_UpdateCanvas({eventstring:JSON.stringify(this.canvas),undotoggle:false}) ) 
